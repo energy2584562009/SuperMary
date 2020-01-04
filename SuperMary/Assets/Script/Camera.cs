@@ -7,7 +7,8 @@ public class Camera : MonoBehaviour
    
     [Header("玩家物件")]
     public GameObject Play;
-    [HideInInspector]///隱藏設定好的值
+    [Space]
+
     [Header("相機移動速度")]
     public float Speed;
 

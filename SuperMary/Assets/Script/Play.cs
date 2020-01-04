@@ -6,107 +6,150 @@ using UnityEngine.UI;
 
 public class Play : MonoBehaviour
 {
-    #region 公開宣告
+    #region 玩家數值宣告
+
     [HideInInspector]///隱藏設定好的值
+    [HeaderAttribute("-----玩家數值-----")]
     [Header("移動速度")]
     public float Speed;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("跳耀調整值")]
     public float Hight;
-
-    [HideInInspector]///隱藏設定好的值
-    [Header("玩家剛體")]
-    public Rigidbody2D Rid;
-
-    [HideInInspector]///隱藏設定好的值
-    [Header("玩家動畫")]
-    public Animator Ani;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("生命次數")]
     public int HP;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
-    [Header("生命顯示")]
-    public Text HPText;
+    [Header("分數")]
+    public int Coin;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
-    [Header("分數顯示")]
-    public Text CoinText;
+    [Header("地板判斷開關")]
+    public bool Floor;
+    [Space]
+
+    #endregion
+
+    #region 物件
 
     [HideInInspector]///隱藏設定好的值
-    [Header("死亡畫面")]
-    public GameObject DeadGUI;
-
-    [HideInInspector]///隱藏設定好的值
-    [Header("死亡生命顯示")]
-    public Text DeadHP;
+    [Header("玩家剛體")]
+    [HeaderAttribute("-----物件-----")]
+    public Rigidbody2D Rid;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("玩家物件")]
     public GameObject PlayGameObject;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("相機位置")]
     public GameObject Camera;
+    [Space]
 
-    [HideInInspector]///隱藏設定好的值
-    [Header("死亡文字")]
-    public Text Lose;
+    #endregion
 
+    #region 介面
+    
     [HideInInspector]///隱藏設定好的值
-    [Header("勝利金幣")]
-    public Text WinCoin;
-
-    [HideInInspector]///隱藏設定好的值
-    [Header("勝利生命")]
-    public Text WinHP;
+    [Header("死亡畫面")]
+    [HeaderAttribute("-----介面-----")]
+    public GameObject DeadGUI;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("勝利畫面")]
     public GameObject WinGUI;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("畫面")]
     public GameObject GUI;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("重新開始")]
     public GameObject RePlayGUI;
+    [Space]
 
     [HideInInspector]///隱藏設定好的值
     [Header("退出")]
     public GameObject QuitGUI;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("生命顯示")]
+    public Text HPText;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("分數顯示")]
+    public Text CoinText;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("死亡生命顯示")]
+    public Text DeadHP;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("死亡文字")]
+    public Text Lose;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("勝利金幣")]
+    public Text WinCoin;
+    [Space]
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("勝利生命")]
+    public Text WinHP;
+    [Space]
+
+    #endregion
+
+    #region 其他
+
+    [HideInInspector]///隱藏設定好的值
+    [Header("玩家動畫")]
+    [HeaderAttribute("-----其他-----")]
+    public Animator Ani;
+    [Space]
+
+    #endregion
+
+    #region 音效
 
     [Header("音效")]
+    [HeaderAttribute("-----音效-----")]
     public AudioSource PlayAudio;
+    [Space]
 
     [Header("跳耀音效")]
     public AudioClip JumpAudio;
+    [Space]
 
     [Header("死亡音效")]
     public AudioClip DeadAudio;
+    [Space]
 
     [Header("吃金幣音效")]
     public AudioClip CoinAudio;
+    [Space]
 
     [Header("吃道具音效")]
     public AudioClip EatAudio;
+
     #endregion
 
-    #region 隱藏宣告
-    [Header("分數")]
-    private int Coin;
-
-    [Header("跳耀值")]
-    private float JumpHight;
-
-    [Header("地板判斷開關")]
-    private bool Floor;
-    #endregion
-
-    // Start is called before the first frame update
     void Start()
     {
         //生命次數顯示
@@ -116,22 +159,19 @@ public class Play : MonoBehaviour
         DontDestroyOnLoad(GUI);
     }
 
-    // Update is called once per frame
+    //每一幀數不固定
     void Update()
     {
         // 走路方法
         Run();
     }
 
+    //每一幀數固定
     void FixedUpdate()
     {
         // 跳耀方法
         Jump();
     }
-
-
-
-    #region 玩家控制
 
     #region 移動
     /// <summary>
@@ -183,8 +223,7 @@ public class Play : MonoBehaviour
         {
             // 跳耀動畫
             Ani.SetBool("跳耀", true);
-            PlayAudio.PlayOneShot(JumpAudio, 0.5f);
-            Debug.Log(Hight * Time.deltaTime);     
+            PlayAudio.PlayOneShot(JumpAudio, 0.5f);  
             // 執行方法
             Rid.velocity = new Vector2(0, Hight * Time.deltaTime);
             Floor = false; 
@@ -226,12 +265,6 @@ public class Play : MonoBehaviour
         }
     }
     #endregion
-
-   
-
-    #endregion
-
-    #region 道具&分數&死亡
 
     #region 分數
     //得到分數 -> Trigger碰撞框
@@ -340,7 +373,7 @@ public class Play : MonoBehaviour
     #endregion
 
 
-    #endregion
+
 
     #region 生命重置
     /// <summary>
